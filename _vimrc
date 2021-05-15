@@ -2,7 +2,11 @@
 call plug#begin('$VIM\vim82\plugged')
 
 " Declare the list of plugins.
-Plug 'Lucas-Wye/Automatic-for-Verilog-RTLTree'
+Plug 'fearyuan/automatic-for-verilog'
+Plug 'vhda/verilog_systemverilog.vim'
+Plug 'preservim/nerdtree' |
+            \ Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'junegunn/vim-easy-align'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()" Vim with all enhancements
@@ -87,27 +91,25 @@ set foldmethod=marker                "折叠采用标记法
 
 "match插件配置
 "-----------------------------------------------------------------
-let b:match_words = '\<function\>:\<endfunction\>,'
-					\ . '\<task\>:\<endtask\>,'
-					\ . '\<module\>:\<endmodule\>,'
-					\ . '\<begin\>:\<end\>,'
-					\ . '\<case\>:\<endcase\>,'
-					\ . '\<class\>:\<endclass\>,'
-					\ . '\<for\>:\<endfor\>,'
-					\ . '\<while\>:\<endwhile\>,'
-					\ . '\<specify\>:\<endspecify\>,'
-					\ . '\<generate\>:\<endgenerate\>,'
-					\ . '\<\(ifdef\|ifndef\)\>:\<\(else\|elsif\)\>:\<endif\>,'
-					\ . '`\<\(ifdef\|ifndef\)\>:`\<\(else\|elsif\)\>:`\<endif\>'
+runtime macros/matchit.vim
+
+"nerdtree插件配置
+"-----------------------------------------------------------------
+nnoremap <silent> <expr> <F7> g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
+"map <F7> :NERDTree<CR>
+
+"easy align插件配置
+"-----------------------------------------------------------------
+nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
 
 "保存光标位置
 "-----------------------------------------------------------------
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 
-"快捷键设置
+"其他快捷键设置
 "-----------------------------------------------------------------
-let t:RtlTreeVlogDefine = 1
-map <F7> :NERDTree<CR>
+"let t:RtlTreeVlogDefine = 1
 "map <F8> :RtlTree<CR>
 "let mapleader = ","
 "nmap <leader>c "+y
