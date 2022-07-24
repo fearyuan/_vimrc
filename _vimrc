@@ -1,5 +1,5 @@
 " Plugins will be downloaded under the specified directory.
-call plug#begin('$VIM\vim82\plugged')
+call plug#begin('$VIM\vim90\plugged')
 
 " Declare the list of plugins.
 Plug 'fearyuan/automatic-for-verilog'
@@ -7,6 +7,8 @@ Plug 'vhda/verilog_systemverilog.vim'
 Plug 'preservim/nerdtree' |
             \ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/vim-easy-align'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()" Vim with all enhancements
@@ -103,6 +105,11 @@ nnoremap <silent> <expr> <F7> g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufe
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
+"vim airline插件配置
+"-----------------------------------------------------------------
+let g:airline_powerline_fonts = 1
+let g:airline_theme='bubblegum'
+
 "保存光标位置
 "-----------------------------------------------------------------
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
@@ -120,5 +127,5 @@ au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|
 :ab Zuhe always @(*)begin<Enter>if()begin<Enter>end<Enter>else begin<Enter>end<Enter>end
 :ab Shixv always @(posedge clk)begin<Enter>if(rst)begin<Enter>end<Enter>else if()begin<Enter>end<Enter>end
 :ab Jsq always @(posedge clk)begin<Enter>if(rst)begin<Enter>cnt <= 0;<Enter>end<Enter>else if(add_cnt)begin<Enter>if(end_cnt)begin<Enter>cnt <= 0;<Enter>end<Enter>else begin<Enter>cnt <= cnt + 1;<Enter>end<Enter>end<Enter>end<Enter>assign add_cnt = ;<Enter>assign end_cnt = add_cnt && ;
-:ab Ztj always @(posedge clk)begin<Enter>if(rst)begin<Enter>state_c <= IDLE;<Enter>end<Enter>else begin<Enter>state_c <= state_n;<Enter>end<Enter>end<Enter>always @(*)begin<Enter>case(state_c)<Enter>IDLE:begin<Enter>if(idle2s1)begin<Enter>state_n <= S1;<Enter>end<Enter>else begin<Enter>state_n <= state_c;<Enter>end<Enter>end<Enter>S1:begin<Enter>if(s12s2)begin<Enter>state_n <= S2;<Enter>end<Enter>else begin<Enter>state_n <= state_c;<Enter>end<Enter>end<Enter>S2:begin<Enter>if(s22idle)begin<Enter>state_n <= IDLE;<Enter>end<Enter>else begin<Enter>state_n <= state_c;<Enter>end<Enter>end<Enter>default:begin<Enter>state_n <= IDLE;<Enter>end<Enter>endcase<Enter>end<Enter>assign idle2s1 = (state_c == IDLE) && ;<Enter>assign s12s2 = (state_c == S1) && ;<Enter>assign s22idle = (state_c == S2) && ;
-:ab Tb reg clk, rst_n;<Enter><Enter><Enter>/*时钟*/<Enter>initial clk = 0;<Enter>always #5 clk = ~clk;//100MHz<Enter><Enter><Enter>/*复位*/<Enter>initial begin<Enter>rst_n = 1;<Enter>#100 rst_n = 0;<Enter>#100 rst_n = 1;//200ns<Enter>end<Enter><Enter><Enter>/*端口*/<Enter>/*例化*/<Enter>endmodule
+:ab Ztj always @(posedge clk)begin<Enter>if(rst)begin<Enter>state_c <= IDLE;<Enter>end<Enter>else begin<Enter>state_c <= state_n;<Enter>end<Enter>end<Enter>always @(*)begin<Enter>case(state_c)<Enter>IDLE:begin<Enter>if(idle2s1)begin<Enter>state_n = S1;<Enter>end<Enter>else begin<Enter>state_n = state_c;<Enter>end<Enter>end<Enter>S1:begin<Enter>if(s12s2)begin<Enter>state_n = S2;<Enter>end<Enter>else begin<Enter>state_n = state_c;<Enter>end<Enter>end<Enter>S2:begin<Enter>if(s22idle)begin<Enter>state_n = IDLE;<Enter>end<Enter>else begin<Enter>state_n = state_c;<Enter>end<Enter>end<Enter>default:begin<Enter>state_n = IDLE;<Enter>end<Enter>endcase<Enter>end<Enter>assign idle2s1 = (state_c == IDLE) && ;<Enter>assign s12s2 = (state_c == S1) && ;<Enter>assign s22idle = (state_c == S2) && ;
+:ab Tb reg clk, rst_n;<Enter><Enter><Enter>/*Clock define*/<Enter>initial clk = 0;<Enter>always #5 clk = ~clk;//100MHz<Enter><Enter><Enter>/*Reset define*/<Enter>initial begin<Enter>rst_n = 1;<Enter>#100 rst_n = 0;<Enter>#100 rst_n = 1;//200ns<Enter>end<Enter><Enter><Enter>/*Drive define*/<Enter>/*Instantiation define*/<Enter>endmodule
